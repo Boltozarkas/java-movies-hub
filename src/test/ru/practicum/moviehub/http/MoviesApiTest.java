@@ -75,12 +75,7 @@ public class MoviesApiTest {
     @Test
     @Order(2)
     void postMovie_withValidData_returnsCreatedMovie() throws Exception {
-        String movieJson = """
-            {
-                "title": "Интерстеллар",
-                "year": 2014
-            }
-            """;
+        String movieJson = "{\"title\": \"Интерстеллар\", \"year\": 2014}";
 
         HttpRequest req = HttpRequest.newBuilder()
                 .uri(URI.create(BASE + "/movies"))
@@ -105,12 +100,7 @@ public class MoviesApiTest {
     @Order(3)
     void getMovies_afterAdding_returnsMoviesList() throws Exception {
         // Сначала добавляем фильм
-        String movieJson = """
-            {
-                "title": "Начало",
-                "year": 2010
-            }
-            """;
+        String movieJson = "{\"title\": \"Начало\", \"year\": 2010}";
 
         HttpRequest postReq = HttpRequest.newBuilder()
                 .uri(URI.create(BASE + "/movies"))
@@ -141,12 +131,7 @@ public class MoviesApiTest {
     @Order(4)
     void getMovieById_withValidId_returnsMovie() throws Exception {
         // Добавляем фильм
-        String movieJson = """
-            {
-                "title": "Матрица",
-                "year": 1999
-            }
-            """;
+        String movieJson = "{\"title\": \"Матрица\", \"year\": 1999}";
 
         HttpRequest postReq = HttpRequest.newBuilder()
                 .uri(URI.create(BASE + "/movies"))
@@ -192,12 +177,7 @@ public class MoviesApiTest {
     @Test
     @Order(6)
     void postMovie_withEmptyTitle_returnsValidationError() throws Exception {
-        String movieJson = """
-            {
-                "title": "",
-                "year": 2020
-            }
-            """;
+        String movieJson = "{\"title\": \"\", \"year\": 2020}";
 
         HttpRequest req = HttpRequest.newBuilder()
                 .uri(URI.create(BASE + "/movies"))
@@ -218,12 +198,7 @@ public class MoviesApiTest {
     @Order(7)
     void deleteMovie_withValidId_returnsNoContent() throws Exception {
         // Добавляем фильм
-        String movieJson = """
-            {
-                "title": "Фильм для удаления",
-                "year": 2020
-            }
-            """;
+        String movieJson = "{\"title\": \"Фильм для удаления\", \"year\": 2020}";
 
         HttpRequest postReq = HttpRequest.newBuilder()
                 .uri(URI.create(BASE + "/movies"))
@@ -274,12 +249,7 @@ public class MoviesApiTest {
     @Test
     @Order(9)
     void postMovie_withInvalidYear_returnsValidationError() throws Exception {
-        String movieJson = """
-            {
-                "title": "Некорректный год",
-                "year": 1800
-            }
-            """;
+        String movieJson = "{\"title\": \"Некорректный год\", \"year\": 1800}";
 
         HttpRequest req = HttpRequest.newBuilder()
                 .uri(URI.create(BASE + "/movies"))
@@ -300,12 +270,7 @@ public class MoviesApiTest {
     @Order(10)
     void postMovie_withTooLongTitle_returnsValidationError() throws Exception {
         String longTitle = "A".repeat(101);
-        String movieJson = String.format("""
-            {
-                "title": "%s",
-                "year": 2020
-            }
-            """, longTitle);
+        String movieJson = "{\"title\": \"" + longTitle + "\", \"year\": 2020}";
 
         HttpRequest req = HttpRequest.newBuilder()
                 .uri(URI.create(BASE + "/movies"))
@@ -341,12 +306,7 @@ public class MoviesApiTest {
     @Test
     @Order(12)
     void postMovie_withWrongContentType_returnsUnsupportedMediaType() throws Exception {
-        String movieJson = """
-            {
-                "title": "Фильм",
-                "year": 2020
-            }
-            """;
+        String movieJson = "{\"title\": \"Фильм\", \"year\": 2020}";
 
         HttpRequest req = HttpRequest.newBuilder()
                 .uri(URI.create(BASE + "/movies"))
@@ -363,12 +323,7 @@ public class MoviesApiTest {
     }
 
     private void addMovie(String title, int year) throws IOException, InterruptedException {
-        String movieJson = String.format("""
-            {
-                "title": "%s",
-                "year": %d
-            }
-            """, title, year);
+        String movieJson = "{\"title\": \"" + title + "\", \"year\": " + year + "}";
 
         HttpRequest req = HttpRequest.newBuilder()
                 .uri(URI.create(BASE + "/movies"))
