@@ -25,6 +25,9 @@ public class MoviesHandler extends BaseHttpHandler {
     private final int currentYear;
     private final Type movieListType;
 
+    // Публичная константа пути
+    public static final String MOVIES_PATH = "/movies";
+
     public MoviesHandler(MoviesStore moviesStore) {
         this.moviesStore = moviesStore;
         this.gson = new GsonBuilder().create();
@@ -41,7 +44,7 @@ public class MoviesHandler extends BaseHttpHandler {
             String query = exchange.getRequestURI().getQuery();
 
             // Проверяем, что путь начинается с /movies
-            if (!path.startsWith("/movies")) {
+            if (!path.startsWith(MOVIES_PATH)) {
                 sendError(exchange, 404, "Ресурс не найден");
                 return;
             }
@@ -67,7 +70,7 @@ public class MoviesHandler extends BaseHttpHandler {
 
     private void handleGet(HttpExchange exchange, String path, String query) throws IOException {
         // Обработка GET /movies
-        if (path.equals("/movies")) {
+        if (path.equals(MOVIES_PATH)) {
             if (query != null && query.contains("year=")) {
                 handleGetByYear(exchange, query);
             } else {
@@ -77,7 +80,7 @@ public class MoviesHandler extends BaseHttpHandler {
         }
 
         // Обработка GET /movies/{id}
-        if (path.startsWith("/movies/")) {
+        if (path.startsWith(MOVIES_PATH + "/")) {
             handleGetMovieById(exchange, path);
             return;
         }
